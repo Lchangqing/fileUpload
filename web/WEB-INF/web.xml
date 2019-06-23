@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+<!--   <display-name>mvc</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list> -->
+  <context-param>
+    <param-name>userSessionKey</param-name>
+    <param-value>USERSESSIONKEY</param-value>
+   </context-param>
+   
+   
+   <context-param>
+  	<param-name>rediretPage</param-name>
+  	<param-value>/index.jsp</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>uncheckedUrls</param-name>
+  	<param-value>/404.jsp,/500.jsp,/register.jsp,/index.jsp</param-value>
+  </context-param>
+   
+
+  <!-- 监听器 -->
+  <listener>
+    <listener-class>cn.edu.swu.mvcapp.listener.FileUploadAppListener</listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>cn.edu.swu.mvcapp.listener.FileUploadSessionListener</listener-class>
+  </listener>
+  
+  <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+  
+  <!-- 过滤器 -->
+  <filter>
+  	<filter-name>AuthFilter</filter-name>
+  	<filter-class>cn.edu.swu.mvcapp.fliter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AuthFilter</filter-name>
+  	<url-pattern>/authority-manager.jsp</url-pattern>
+  	<url-pattern>/file-manage.jsp</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>  
+  
+  <filter>
+  	<filter-name>LoginFilter</filter-name>
+  	<filter-class>cn.edu.swu.mvcapp.fliter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>LoginFilter</filter-name>
+  	<url-pattern>*.jsp</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
+  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/500.jsp</location>
+  </error-page>
+  <servlet>
+    <servlet-name>StudentServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.servelet.StudentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudentServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FilesServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.servelet.FilesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilesServlet</servlet-name>
+    <url-pattern>*.go</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.servelet.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/uploadServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FileDownLoadServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.servelet.FileDownLoadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileDownLoadServlet</servlet-name>
+    <url-pattern>*.down</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+    <servlet-name>CheckCodeServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.formIssue.CheckCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckCodeServlet</servlet-name>
+    <url-pattern>/checkCodeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ValidateColorServlet</servlet-name>
+    <servlet-class>cn.edu.swu.mvcapp.servelet.ValidateColorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ValidateColorServlet</servlet-name>
+    <url-pattern>/validateColorServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
